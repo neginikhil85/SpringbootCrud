@@ -1,4 +1,4 @@
-package com.xadmin.SpringBootCrud.bean;
+package com.xadmin.SpringBootCrud.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

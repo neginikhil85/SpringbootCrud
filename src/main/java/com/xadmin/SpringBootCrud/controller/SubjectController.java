@@ -1,42 +1,46 @@
 package com.xadmin.SpringBootCrud.controller;
 
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.xadmin.SpringBootCrud.bean.Subject;
+import com.xadmin.SpringBootCrud.entity.Subject;
 import com.xadmin.SpringBootCrud.service.SubjectService;
 
 @RestController
+@RequestMapping("/subjects")
 public class SubjectController {
-	@Autowired
-	private SubjectService subjectService;
+
+	//	@Autowired
+	private final SubjectService subjectService;
 	
-	@RequestMapping("/subjects")
-	public List<Subject> getAllSubjects(){
-		
-		return subjectService.getAllSubjects();
+	public SubjectController(SubjectService subjectService) {
+		this.subjectService = subjectService;
+	}
+
+	@GetMapping("/{id}")
+	public Subject getAllSubjects(@PathVariable("id") String id){
+		return subjectService.getSubject(id);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST , value="/subjects")
+	@PostMapping
 	public void addSubject(@RequestBody Subject subject) {
-		
 		subjectService.addSubject(subject);
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT , value="/subjects/{id}")
-	public void updateSubject(@PathVariable String id, @RequestBody Subject subject) {
-		
+	@PutMapping("/{id}")
+	public void updateSubject(@PathVariable("id") String id, @RequestBody Subject subject) {
 		subjectService.updateSubject(id,subject);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE , value="/subjects/{id}")
-	public void deleteSubject(@PathVariable String id) {
+	@DeleteMapping("/{id}")
+	public void deleteSubject(@PathVariable("id") String id) {
 		subjectService.deleteSubject(id);
 	}
 }
